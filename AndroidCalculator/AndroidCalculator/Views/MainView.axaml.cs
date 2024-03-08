@@ -1,13 +1,14 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 
 namespace AndroidCalculator.Views;
 
 public partial class MainView : UserControl
 {
-    private float _currentlyValue;
-    private float _lastValue;
+    private float _currentlyValue = 0;
+    private float _lastValue = 0;
     private string _operation = "";
     private bool _isClear = false;
     public MainView()
@@ -24,7 +25,14 @@ public partial class MainView : UserControl
     {
         return a - b;
     }
-
+    private float Mult(float a, float b)
+    {
+        return a * b;
+    }
+    private float Div(float a, float b)
+    {
+        return a / b;
+    }
 
 
     private void OnNumberClick(object? sender, RoutedEventArgs e)
@@ -35,7 +43,12 @@ public partial class MainView : UserControl
             _isClear = false;
         }
         var button = (Button)sender;
-        ResultTextBox.Text += button.Content.ToString();
+        if (ResultTextBox.Text != "0")
+            ResultTextBox.Text += button.Content.ToString();
+        else if (button.Content.ToString() != "0")
+        {
+            ResultTextBox.Text = button.Content.ToString();
+        }
     }
     private void AddButtonClick(object? sender, RoutedEventArgs e)
     {
@@ -61,6 +74,33 @@ public partial class MainView : UserControl
         if (float.TryParse(ResultTextBox.Text, out _lastValue))
         {
             _operation = "-";
+            _isClear = true;
+        }
+    }
+
+    //mult func
+    private void OnMultClick(object? sender, RoutedEventArgs e)
+    {
+        if (!string.IsNullOrEmpty(_operation))
+        {
+            PerformOperation();
+        }
+        if (float.TryParse(ResultTextBox.Text, out _lastValue))
+        {
+            _operation = "*";
+            _isClear = true;
+        }
+    }
+    //div func
+    private void OnDivClick(object? sender, RoutedEventArgs e)
+    {
+        if (!string.IsNullOrEmpty(_operation))
+        {
+            PerformOperation();
+        }
+        if (float.TryParse(ResultTextBox.Text, out _lastValue))
+        {
+            _operation = "/";
             _isClear = true;
         }
     }
@@ -91,6 +131,18 @@ public partial class MainView : UserControl
             _lastValue = float.Parse(ResultTextBox.Text);
             _operation = "";
         }
+        if (_operation == "*" && float.TryParse(ResultTextBox.Text, out _currentlyValue))
+        {
+            ResultTextBox.Text = Mult(_lastValue, _currentlyValue).ToString();
+            _lastValue = float.Parse(ResultTextBox.Text);
+            _operation = "";
+        }
+        if (_operation == "/" && float.TryParse(ResultTextBox.Text, out _currentlyValue))
+        {
+            ResultTextBox.Text = Div(_lastValue, _currentlyValue).ToString();
+            _lastValue = float.Parse(ResultTextBox.Text);
+            _operation = "";
+        }
         if (_operation == "Sin" && float.TryParse(ResultTextBox.Text, out _currentlyValue))
         {
             ResultTextBox.Text = Math.Sin(Convert.ToDouble(_currentlyValue) * Math.PI / 180).ToString();
@@ -101,7 +153,7 @@ public partial class MainView : UserControl
     }
     private void OnClearClick(object sender, RoutedEventArgs e)
     {
-        ResultTextBox.Text = "";
+        ResultTextBox.Text = "0";
         _operation = "";
         _lastValue = 0;
         _currentlyValue = 0;
@@ -122,6 +174,22 @@ public partial class MainView : UserControl
             if (float.TryParse(ResultTextBox.Text, out float _currentValue))
             {
                 _currentValue -= _lastValue;
+                ResultTextBox.Text = _currentValue.ToString();
+            }
+        }
+        if (_operation == "*")
+        {
+            if (float.TryParse(ResultTextBox.Text, out float _currentValue))
+            {
+                _currentValue *= _lastValue;
+                ResultTextBox.Text = _currentValue.ToString();
+            }
+        }
+        if (_operation == "/")
+        {
+            if (float.TryParse(ResultTextBox.Text, out float _currentValue))
+            {
+                _currentValue /= _lastValue;
                 ResultTextBox.Text = _currentValue.ToString();
             }
         }
