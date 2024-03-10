@@ -7,17 +7,20 @@ namespace AndroidCalculator.Views;
 
 public partial class MainView : UserControl
 {
-    private float _currentlyValue = 0;
     private float _lastValue = 0;
-    private string _operation = "";
+    private string _currentOperation = "";
+    private float _repeatValue = 0;
     private bool _isClear = false;
+    private bool _operationRepeat = false;
+    private string _lastOperation= "";
+    
     public MainView()
     {
         InitializeComponent();
         ResultTextBox.IsReadOnly = true;
     }
 
-
+    #region
     private float Add(float a, float b)
     {
         return a + b;
@@ -34,7 +37,7 @@ public partial class MainView : UserControl
     {
         return a / b;
     }
-
+    #endregion
 
     private void OnNumberClick(object? sender, RoutedEventArgs e)
     {
@@ -54,58 +57,58 @@ public partial class MainView : UserControl
     private void OnAddClick(object? sender, RoutedEventArgs e)
     {
 
-        if (!string.IsNullOrEmpty(_operation))
+        if (!string.IsNullOrEmpty(_currentOperation) && _currentOperation != "+")
         {
             PerformOperation();
-            return;
         }
         if (float.TryParse(ResultTextBox.Text, out _lastValue))
         {
-            _operation = "+";
+            _currentOperation = "+";
             _isClear = true;
+            _operationRepeat = false;
         }
     }
     private void OnSubtractClick(object? sender, RoutedEventArgs e)
     {
 
-        if (!string.IsNullOrEmpty(_operation))
+        if (!string.IsNullOrEmpty(_currentOperation) && _currentOperation != "-")
         {
             PerformOperation();
-            return;
         }
         if (float.TryParse(ResultTextBox.Text, out _lastValue))
         {
-            _operation = "-";
+            _currentOperation = "-";
             _isClear = true;
+            _operationRepeat = false;
         }
     }
 
     //mult func
     private void OnMultClick(object? sender, RoutedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(_operation))
+        if (!string.IsNullOrEmpty(_currentOperation) && _currentOperation != "*")
         {
             PerformOperation();
-            return;
         }
         if (float.TryParse(ResultTextBox.Text, out _lastValue))
         {
-            _operation = "*";
+            _currentOperation = "*";
             _isClear = true;
+            _operationRepeat = false;
         }
     }
     //div func
     private void OnDivClick(object? sender, RoutedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(_operation))
+        if (!string.IsNullOrEmpty(_currentOperation) && _currentOperation  != "/")
         {
             PerformOperation();
-            return;
         }
         if (float.TryParse(ResultTextBox.Text, out _lastValue))
         {
-            _operation = "/";
+            _currentOperation = "/";
             _isClear = true;
+            _operationRepeat = false;
         }
     }
  /*   private void OnSinClick(object? sender, RoutedEventArgs e)
@@ -123,46 +126,61 @@ public partial class MainView : UserControl
 */
     private void OnEqualsClick(object sender, RoutedEventArgs e)
     {
-        if (_operation == "+" && float.TryParse(ResultTextBox.Text, out _currentlyValue))
+        if (!string.IsNullOrEmpty(_lastOperation) && _operationRepeat)
         {
-            ResultTextBox.Text = Add(_lastValue, _currentlyValue).ToString();
-            _lastValue = float.Parse(ResultTextBox.Text);
+            RepeatOperation(_repeatValue);
+            return;
         }
-        if (_operation == "-" && float.TryParse(ResultTextBox.Text, out _currentlyValue))
+        if (_currentOperation == "+" && float.TryParse(ResultTextBox.Text, out float _currentValue))
         {
-            ResultTextBox.Text = Subtract(_lastValue, _currentlyValue).ToString();
+            ResultTextBox.Text = Add(_lastValue, _currentValue).ToString();
             _lastValue = float.Parse(ResultTextBox.Text);
+            _repeatValue = _currentValue;
         }
-        if (_operation == "*" && float.TryParse(ResultTextBox.Text, out _currentlyValue))
+        if (_currentOperation == "-" && float.TryParse(ResultTextBox.Text, out _currentValue))
         {
-            ResultTextBox.Text = Mult(_lastValue, _currentlyValue).ToString();
+            ResultTextBox.Text = Subtract(_lastValue, _currentValue).ToString();
             _lastValue = float.Parse(ResultTextBox.Text);
+            _repeatValue = _currentValue;
         }
-        if (_operation == "/" && float.TryParse(ResultTextBox.Text, out _currentlyValue))
+        if (_currentOperation == "*" && float.TryParse(ResultTextBox.Text, out _currentValue))
         {
-            ResultTextBox.Text = Div(_lastValue, _currentlyValue).ToString();
+            ResultTextBox.Text = Mult(_lastValue, _currentValue).ToString();
             _lastValue = float.Parse(ResultTextBox.Text);
+            _repeatValue = _currentValue;
         }
-/*        if (_operation == "Sin" && float.TryParse(ResultTextBox.Text, out _currentlyValue))
+        if (_currentOperation == "/" && float.TryParse(ResultTextBox.Text, out _currentValue))
         {
-            ResultTextBox.Text = Math.Sin(Convert.ToDouble(_currentlyValue) * Math.PI / 180).ToString();
-            _operation = "";
-        }*/
+            ResultTextBox.Text = Div(_lastValue, _currentValue).ToString();
+            _lastValue = float.Parse(ResultTextBox.Text);
+            _repeatValue = _currentValue;
+        }
+        /*        if (_operation == "Sin" && float.TryParse(ResultTextBox.Text, out _currentlyValue))
+                {
+                    ResultTextBox.Text = Math.Sin(Convert.ToDouble(_currentlyValue) * Math.PI / 180).ToString();
+                    _operation = "";
+                }*/
+        _lastOperation = _currentOperation;
+        _currentOperation = "";
         _isClear = true;
-        _operation = "";
+        _operationRepeat = true;
+        
+        
 
     }
     private void OnClearClick(object sender, RoutedEventArgs e)
     {
         ResultTextBox.Text = "0";
-        _operation = "";
+        _currentOperation = "";
+        _operationRepeat = false;
         _lastValue = 0;
-        _currentlyValue = 0;
+        _isClear = false;
+        _lastOperation = "";
     }
 
     private void PerformOperation()
     {
-        if (_operation == "+")
+        if (_currentOperation == "+")
         {
             if (float.TryParse(ResultTextBox.Text, out float _currentValue))
             {
@@ -170,15 +188,15 @@ public partial class MainView : UserControl
                 ResultTextBox.Text = _lastValue.ToString();
             }
         }
-        if (_operation == "-")
+        if (_currentOperation == "-")
         {
             if (float.TryParse(ResultTextBox.Text, out float _currentValue))
             {
-                _currentValue -= _lastValue;
-                ResultTextBox.Text = _currentValue.ToString();
+                _lastValue -= _currentValue;
+                ResultTextBox.Text = _lastValue.ToString();
             }
         }
-        if (_operation == "*")
+        if (_currentOperation == "*")
         {
             if (float.TryParse(ResultTextBox.Text, out float _currentValue))
             {
@@ -186,13 +204,45 @@ public partial class MainView : UserControl
                 ResultTextBox.Text = _currentValue.ToString();
             }
         }
-        if (_operation == "/")
+        if (_currentOperation == "/")
         {
             if (float.TryParse(ResultTextBox.Text, out float _currentValue))
             {
                 _currentValue /= _lastValue;
                 ResultTextBox.Text = _currentValue.ToString();
             }
+        }
+/*        if (_operation == "Sin")
+        {
+            if (float.TryParse(ResultTextBox.Text, out float _lastValue))
+            {
+                ResultTextBox.Text = Math.Sin(Convert.ToDouble(_lastValue) * Math.PI / 180).ToString();
+            }
+        }*/
+
+    }
+    private void RepeatOperation(float repeatValue)
+    {
+        if (_lastOperation == "+")
+        {
+                _lastValue += repeatValue;
+                ResultTextBox.Text = _lastValue.ToString();
+        }
+        if (_lastOperation == "-")
+        {
+                _lastValue -= repeatValue;
+                ResultTextBox.Text = _lastValue.ToString();
+        }
+        if (_lastOperation == "*")
+        {
+                _lastValue *= repeatValue;
+                ResultTextBox.Text = _lastValue.ToString();
+        }
+        if (_lastOperation == "/")
+        {
+                _lastValue /= repeatValue;
+                ResultTextBox.Text = _lastValue.ToString();
+
         }
 /*        if (_operation == "Sin")
         {
