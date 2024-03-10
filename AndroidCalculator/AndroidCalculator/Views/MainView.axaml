@@ -9,9 +9,15 @@
 	<UserControl.Styles>
 		<Style Selector="Button">
 			<Setter Property="Background"  Value="Gray"/>
+			<Setter Property="Height" Value="60"/>
+			<Setter Property="Width" Value="70"/>
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+			<Setter Property="HorizontalContentAlignment" Value="Center" />
 		</Style>
 		<Style Selector="Button:pointerover/template/ContentPresenter#PART_ContentPresenter">
 			<Setter Property="Background" Value="Blue"/>
+			
+		
 		</Style>
 	</UserControl.Styles>
   <Design.DataContext>
@@ -25,9 +31,9 @@
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
-		<TextBox x:Name="ResultTextBox" Grid.Row="0" FontSize="24" HorizontalAlignment="Center" Margin="10" Width="750" Text=""/>
+		<TextBox x:Name="ResultTextBox" Grid.Row="0" FontSize="24" HorizontalAlignment="Center" Margin="10" Width="375" Text="0" HorizontalContentAlignment ="Right"/>
 
-		<Grid Grid.Row="1" Margin="10">
+		<Grid Grid.Row="1" Margin="50">
 			<Grid.RowDefinitions>
 				<RowDefinition/>
 				<RowDefinition/>
@@ -39,9 +45,8 @@
 				<ColumnDefinition/>
 				<ColumnDefinition/>
 				<ColumnDefinition/>
-				<ColumnDefinition/>
 			</Grid.ColumnDefinitions>
-			<Button Content="1" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Click="OnNumberClick" Padding="15"/>
+			<Button Content="1" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Click="OnNumberClick"/>
 			<Button Content="2" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Click="OnNumberClick"/>
 			<Button Content="3" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Click="OnNumberClick"/>
 			<Button Content="C" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Click="OnClearClick" />
@@ -52,9 +57,9 @@
 			<Button Content="7" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Click="OnNumberClick" />
 			<Button Content="8" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Click="OnNumberClick"  />
 			<Button Content="9" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Click="OnNumberClick"  />
-			<Button Content="SIN" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" Click="OnSinClick"  />
+			<!--<Button Content="SIN" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" Click="OnSinClick"/>-->
 			<Button Content="0" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Click="OnNumberClick"  />
-			<Button Content="+" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Click="AddButtonClick" />
+			<Button Content="+" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Click="OnAddClick" />
 			<Button Content="*" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" Click="OnMultClick" />
 			<Button Content="/" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" Click="OnDivClick" />
 			<Button Content="=" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" Click="OnEqualsClick" />

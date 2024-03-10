@@ -14,6 +14,7 @@ public partial class MainView : UserControl
     public MainView()
     {
         InitializeComponent();
+        ResultTextBox.IsReadOnly = true;
     }
 
 
@@ -50,12 +51,13 @@ public partial class MainView : UserControl
             ResultTextBox.Text = button.Content.ToString();
         }
     }
-    private void AddButtonClick(object? sender, RoutedEventArgs e)
+    private void OnAddClick(object? sender, RoutedEventArgs e)
     {
 
         if (!string.IsNullOrEmpty(_operation))
         {
             PerformOperation();
+            return;
         }
         if (float.TryParse(ResultTextBox.Text, out _lastValue))
         {
@@ -84,6 +86,7 @@ public partial class MainView : UserControl
         if (!string.IsNullOrEmpty(_operation))
         {
             PerformOperation();
+            return;
         }
         if (float.TryParse(ResultTextBox.Text, out _lastValue))
         {
@@ -97,6 +100,7 @@ public partial class MainView : UserControl
         if (!string.IsNullOrEmpty(_operation))
         {
             PerformOperation();
+            return;
         }
         if (float.TryParse(ResultTextBox.Text, out _lastValue))
         {
@@ -104,7 +108,7 @@ public partial class MainView : UserControl
             _isClear = true;
         }
     }
-    private void OnSinClick(object? sender, RoutedEventArgs e)
+ /*   private void OnSinClick(object? sender, RoutedEventArgs e)
     {
         if (!string.IsNullOrEmpty(_operation))
         {
@@ -116,39 +120,36 @@ public partial class MainView : UserControl
             _isClear = true;
         }
     }
-
+*/
     private void OnEqualsClick(object sender, RoutedEventArgs e)
     {
         if (_operation == "+" && float.TryParse(ResultTextBox.Text, out _currentlyValue))
         {
             ResultTextBox.Text = Add(_lastValue, _currentlyValue).ToString();
             _lastValue = float.Parse(ResultTextBox.Text);
-            _operation = "";
         }
         if (_operation == "-" && float.TryParse(ResultTextBox.Text, out _currentlyValue))
         {
             ResultTextBox.Text = Subtract(_lastValue, _currentlyValue).ToString();
             _lastValue = float.Parse(ResultTextBox.Text);
-            _operation = "";
         }
         if (_operation == "*" && float.TryParse(ResultTextBox.Text, out _currentlyValue))
         {
             ResultTextBox.Text = Mult(_lastValue, _currentlyValue).ToString();
             _lastValue = float.Parse(ResultTextBox.Text);
-            _operation = "";
         }
         if (_operation == "/" && float.TryParse(ResultTextBox.Text, out _currentlyValue))
         {
             ResultTextBox.Text = Div(_lastValue, _currentlyValue).ToString();
             _lastValue = float.Parse(ResultTextBox.Text);
-            _operation = "";
         }
-        if (_operation == "Sin" && float.TryParse(ResultTextBox.Text, out _currentlyValue))
+/*        if (_operation == "Sin" && float.TryParse(ResultTextBox.Text, out _currentlyValue))
         {
             ResultTextBox.Text = Math.Sin(Convert.ToDouble(_currentlyValue) * Math.PI / 180).ToString();
             _operation = "";
-        }
+        }*/
         _isClear = true;
+        _operation = "";
 
     }
     private void OnClearClick(object sender, RoutedEventArgs e)
@@ -193,13 +194,13 @@ public partial class MainView : UserControl
                 ResultTextBox.Text = _currentValue.ToString();
             }
         }
-        if (_operation == "Sin")
+/*        if (_operation == "Sin")
         {
             if (float.TryParse(ResultTextBox.Text, out float _lastValue))
             {
                 ResultTextBox.Text = Math.Sin(Convert.ToDouble(_lastValue) * Math.PI / 180).ToString();
             }
-        }
+        }*/
 
     }
 }
