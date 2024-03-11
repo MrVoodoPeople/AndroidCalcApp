@@ -11,6 +11,7 @@ public partial class MainView : UserControl
     private bool _isClear = false;
     private bool _isOperationRepeated = false;
     private string _lastOperation= "";
+    private bool _isZero = false;
     
     public MainView()
     {
@@ -33,12 +34,17 @@ public partial class MainView : UserControl
     }
     private float Div(float a, float b)
     {
-        return a / b;
+            return a / b;
     }
     #endregion
 
     private void OnNumberClick(object? sender, RoutedEventArgs e)
     {
+        if(_isZero)
+        {
+            Clear();
+            UnblockOperationButton();
+        }
         if (_isClear)
         {
             ResultTextBox.Text = "";
@@ -51,6 +57,8 @@ public partial class MainView : UserControl
         {
             ResultTextBox.Text = button.Content.ToString();
         }
+        _isZero = false;
+
     }
     private void OnAddClick(object? sender, RoutedEventArgs e)
     {
@@ -149,9 +157,19 @@ public partial class MainView : UserControl
         }
         if (_currentOperation == "/" && float.TryParse(ResultTextBox.Text, out _currentValue))
         {
-            ResultTextBox.Text = Div(_lastValue, _currentValue).ToString();
-            _lastValue = float.Parse(ResultTextBox.Text);
-            _repeatValue = _currentValue;
+            if (_currentValue == 0)
+            {
+                ResultTextBox.Text = "На ноль делить нельзя";
+                _isZero= true;
+                BlockOperationButton();
+                return;
+            }
+            else
+            {
+                ResultTextBox.Text = Div(_lastValue, _currentValue).ToString();
+                _lastValue = float.Parse(ResultTextBox.Text);
+                _repeatValue = _currentValue;
+            }
         }
         /*        if (_operation == "Sin" && float.TryParse(ResultTextBox.Text, out _currentlyValue))
                 {
@@ -168,12 +186,7 @@ public partial class MainView : UserControl
     }
     private void OnClearClick(object sender, RoutedEventArgs e)
     {
-        ResultTextBox.Text = "0";
-        _currentOperation = "";
-        _isOperationRepeated = false;
-        _lastValue = 0;
-        _isClear = false;
-        _lastOperation = "";
+       Clear();
     }
 
     #region
@@ -252,6 +265,30 @@ public partial class MainView : UserControl
                 ResultTextBox.Text = Math.Sin(Convert.ToDouble(_lastValue) * Math.PI / 180).ToString();
             }
         }*/
-
+    }
+    private void Clear()
+    {
+        ResultTextBox.Text = "0";
+        _currentOperation = "";
+        _isOperationRepeated = false;
+        _lastValue = 0;
+        _isClear = false;
+        _lastOperation = "";
+    }
+    private void BlockOperationButton()
+    {   
+        bSubtract.IsEnabled = false;
+        bAdd.IsEnabled = false;
+        bDiv.IsEnabled = false;
+        bEquales.IsEnabled = false;
+        bMult.IsEnabled = false;
+    }
+    private void UnblockOperationButton() 
+    {
+        bSubtract.IsEnabled = true;
+        bAdd.IsEnabled = true;
+        bDiv.IsEnabled = true;
+        bEquales.IsEnabled = true;
+        bMult.IsEnabled = true;
     }
 }
