@@ -55,10 +55,10 @@ public partial class MainView : UserControl
     private void OnAddClick(object? sender, RoutedEventArgs e)
     {
 
-        if (!string.IsNullOrEmpty(_currentOperation) && _currentOperation != "+")
+        /*if (!string.IsNullOrEmpty(_currentOperation) && _currentOperation != "+")
         {
             PerformOperation();
-        }
+        }*/
         if (float.TryParse(ResultTextBox.Text, out _lastValue))
         {
             _currentOperation = "+";
@@ -69,10 +69,10 @@ public partial class MainView : UserControl
     private void OnSubtractClick(object? sender, RoutedEventArgs e)
     {
 
-        if (!string.IsNullOrEmpty(_currentOperation) && _currentOperation != "-")
+        /*if (!string.IsNullOrEmpty(_currentOperation) && _currentOperation != "-")
         {
             PerformOperation();
-        }
+        }*/
         if (float.TryParse(ResultTextBox.Text, out _lastValue))
         {
             _currentOperation = "-";
@@ -84,10 +84,10 @@ public partial class MainView : UserControl
     //mult func
     private void OnMultClick(object? sender, RoutedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(_currentOperation) && _currentOperation != "*")
+        /*if (!string.IsNullOrEmpty(_currentOperation) && _currentOperation != "*")
         {
             PerformOperation();
-        }
+        }*/
         if (float.TryParse(ResultTextBox.Text, out _lastValue))
         {
             _currentOperation = "*";
@@ -98,10 +98,10 @@ public partial class MainView : UserControl
     //div func
     private void OnDivClick(object? sender, RoutedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(_currentOperation) && _currentOperation  != "/")
+        /*if (!string.IsNullOrEmpty(_currentOperation) && _currentOperation  != "/")
         {
             PerformOperation();
-        }
+        }*/
         if (float.TryParse(ResultTextBox.Text, out _lastValue))
         {
             _currentOperation = "/";
@@ -176,7 +176,8 @@ public partial class MainView : UserControl
         _lastOperation = "";
     }
 
-    private void PerformOperation()
+    #region
+    /*private void PerformOperation()
     {
         if (_currentOperation == "+")
         {
@@ -210,15 +211,17 @@ public partial class MainView : UserControl
                 ResultTextBox.Text = _currentValue.ToString();
             }
         }
-/*        if (_operation == "Sin")
+*//*        if (_operation == "Sin")
         {
             if (float.TryParse(ResultTextBox.Text, out float _lastValue))
             {
                 ResultTextBox.Text = Math.Sin(Convert.ToDouble(_lastValue) * Math.PI / 180).ToString();
             }
-        }*/
+        }*//*
 
-    }
+    }*/
+
+    #endregion
     private void RepeatLastOperation(float repeatValue)
     {
         if (_lastOperation == "+")
