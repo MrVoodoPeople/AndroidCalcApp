@@ -1,7 +1,5 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
 
 namespace AndroidCalculator.Views;
 
