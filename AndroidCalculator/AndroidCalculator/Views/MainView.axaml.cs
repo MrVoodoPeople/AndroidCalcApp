@@ -11,7 +11,7 @@ public partial class MainView : UserControl
     private string _currentOperation = "";
     private float _repeatValue = 0;
     private bool _isClear = false;
-    private bool _operationRepeat = false;
+    private bool _isOperationRepeated = false;
     private string _lastOperation= "";
     
     public MainView()
@@ -65,7 +65,7 @@ public partial class MainView : UserControl
         {
             _currentOperation = "+";
             _isClear = true;
-            _operationRepeat = false;
+            _isOperationRepeated = false;
         }
     }
     private void OnSubtractClick(object? sender, RoutedEventArgs e)
@@ -79,7 +79,7 @@ public partial class MainView : UserControl
         {
             _currentOperation = "-";
             _isClear = true;
-            _operationRepeat = false;
+            _isOperationRepeated = false;
         }
     }
 
@@ -94,7 +94,7 @@ public partial class MainView : UserControl
         {
             _currentOperation = "*";
             _isClear = true;
-            _operationRepeat = false;
+            _isOperationRepeated = false;
         }
     }
     //div func
@@ -108,7 +108,7 @@ public partial class MainView : UserControl
         {
             _currentOperation = "/";
             _isClear = true;
-            _operationRepeat = false;
+            _isOperationRepeated = false;
         }
     }
  /*   private void OnSinClick(object? sender, RoutedEventArgs e)
@@ -126,9 +126,9 @@ public partial class MainView : UserControl
 */
     private void OnEqualsClick(object sender, RoutedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(_lastOperation) && _operationRepeat)
+        if (!string.IsNullOrEmpty(_lastOperation) && _isOperationRepeated)
         {
-            RepeatOperation(_repeatValue);
+            RepeatLastOperation(_repeatValue);
             return;
         }
         if (_currentOperation == "+" && float.TryParse(ResultTextBox.Text, out float _currentValue))
@@ -163,7 +163,7 @@ public partial class MainView : UserControl
         _lastOperation = _currentOperation;
         _currentOperation = "";
         _isClear = true;
-        _operationRepeat = true;
+        _isOperationRepeated = true;
         
         
 
@@ -172,7 +172,7 @@ public partial class MainView : UserControl
     {
         ResultTextBox.Text = "0";
         _currentOperation = "";
-        _operationRepeat = false;
+        _isOperationRepeated = false;
         _lastValue = 0;
         _isClear = false;
         _lastOperation = "";
@@ -221,7 +221,7 @@ public partial class MainView : UserControl
         }*/
 
     }
-    private void RepeatOperation(float repeatValue)
+    private void RepeatLastOperation(float repeatValue)
     {
         if (_lastOperation == "+")
         {
