@@ -51,11 +51,19 @@ public partial class MainView : UserControl
             _isClear = false;
         }
         var button = (Button)sender;
-        if (ResultTextBox.Text != "0")
+        if (ResultTextBox.Text != "0" & !ResultTextBox.Text.Contains(",")) 
             ResultTextBox.Text += button.Content.ToString();
-        else if (button.Content.ToString() != "0")
+        else if (ResultTextBox.Text == "," & button.Content.ToString() != ",")
+        {
+            ResultTextBox.Text = "0," + button.Content.ToString();
+        }
+        else if (button.Content.ToString() != "0" & !ResultTextBox.Text.Contains(","))
         {
             ResultTextBox.Text = button.Content.ToString();
+        }
+        else if (button.Content.ToString() != ",")
+        {
+            ResultTextBox.Text += button.Content.ToString();
         }
         _isZero = false;
 
