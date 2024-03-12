@@ -61,7 +61,7 @@ public partial class MainView : UserControl
         {
             ResultTextBox.Text = button.Content.ToString();
         }
-        else if (button.Content.ToString() != ",")
+        else if (button.Content.ToString() != "0" & button.Content.ToString() != ",")
         {
             ResultTextBox.Text += button.Content.ToString();
         }
