@@ -1,5 +1,7 @@
 # AndroidCalcApp
 
+Инструкция:
+
 1. Клонирование репозитория в Visual Studio:
 1.1. Через github:
 1.1.1. На https://github.com/MrVoodoPeople/AndroidCalcApp нажмите на кнопку "<> Code".
