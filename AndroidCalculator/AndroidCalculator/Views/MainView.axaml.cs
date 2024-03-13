@@ -51,23 +51,34 @@ public partial class MainView : UserControl
             _isClear = false;
         }
         var button = (Button)sender;
-        if (ResultTextBox.Text != "0" & !ResultTextBox.Text.Contains(",")) 
+        if (ResultTextBox.Text != "0") 
             ResultTextBox.Text += button.Content.ToString();
-        else if (ResultTextBox.Text == "," & button.Content.ToString() != ",")
-        {
-            ResultTextBox.Text = "0," + button.Content.ToString();
-        }
-        else if (button.Content.ToString() != "0" & !ResultTextBox.Text.Contains(","))
+        else
         {
             ResultTextBox.Text = button.Content.ToString();
-        }
-        else if (button.Content.ToString() != "0" & button.Content.ToString() != ",")
-        {
-            ResultTextBox.Text += button.Content.ToString();
         }
         _isZero = false;
 
     }
+    //OnCommaClick
+    private void OnCommaClick(object? sender, RoutedEventArgs e)
+    {
+        if (_isZero)
+        {
+            Clear();
+            UnblockOperationButton();
+        }
+        if (_isClear)
+        {
+            ResultTextBox.Text = "0";
+            _isClear = false;
+        }
+        var button = (Button)sender;
+        if (!ResultTextBox.Text.Contains(","))
+            ResultTextBox.Text += button.Content.ToString();
+
+    }
+
     private void OnAddClick(object? sender, RoutedEventArgs e)
     {
 

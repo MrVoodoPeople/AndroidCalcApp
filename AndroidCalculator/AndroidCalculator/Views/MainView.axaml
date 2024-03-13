@@ -60,7 +60,7 @@
 			<Button Content="9" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Click="OnNumberClick"  />
 			<!--<Button Content="SIN" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" Click="OnSinClick"/>-->
 			<Button Content="0" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Click="OnNumberClick"  />
-			<Button Content="," Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" Click="OnNumberClick"/>
+			<Button Content="," Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" Click="OnCommaClick"/>
 			<Button  x:Name="bAdd" Content="+" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Click="OnAddClick" />
 			<Button x:Name="bMult" Content="*" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" Click="OnMultClick" />
 			<Button  x:Name="bDiv" Content="/" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" Click="OnDivClick" />
